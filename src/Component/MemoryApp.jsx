@@ -1,6 +1,12 @@
 import Card from "./Cards";
 
 export default function MemoryApp() {
+
+  function changeCardPosition() {
+  
+}
+
+
   return (
     <main>
       <header>
