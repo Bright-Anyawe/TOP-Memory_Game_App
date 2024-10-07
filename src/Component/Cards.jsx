@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import List from "./List";
 
-function Card() {
+function Card({score, setScore, bestScore, setBestScore}) {
   const [cards, setCards] = useState([
     { url: "", name: "Spiderman" },
     { url: "", name: "Captain marvel" },
@@ -10,9 +9,8 @@ function Card() {
     { url: "", name: "Iron Man" },
     { url: "", name: "Thor" },
     { url: "", name: "Thanos" },
-    { url: "", name: "Carol Danvers" },
+    { url: "", name: "Xmen" },
   ]);
-  // const [count, setCount] = useState(1)
 
   useEffect(() => {
     async function fetchData() {
@@ -89,19 +87,38 @@ function Card() {
   //   console.log(`${count} has been read`)
   // }
 
-  function changeCardsPosition(cards) {
+  function changeCardsPosition(e) {
+    setCards( (cards) => ([...cards].sort(() => Math.random() - 0.5)))
 
-    const shuffleCards= [...cards].sort(() => Math.random() - 0.5)
-     setCards( shuffleCards)
+   
+    
+        if(score >= 10) {
+          setCountToZero()
+          return setBestScore(score)
+        }
+        incrementCount()
+
+  function incrementCount() {
+        setScore(score + 1)
 
   }
 
+  function setCountToZero() {
+    setScore(0)
+  }
+  
+
+
+
   return (
-    <>
       <ul>
-        <List cards={cards} changeCardsPosition={changeCardsPosition} />
-      </ul>
-    </>
+     {cards.map((card ) => (
+                   <li data-key={card.name} className="card" onClick={changeCardsPosition }>
+                    {/* <h1> {key} </h1> */}
+            <img src={card.url} alt={card.name} />
+            <h2> {card.name} </h2>
+          </li>
+                  ))} </ul>
   );
 }
 

@@ -1,11 +1,13 @@
+import { useState } from "react"
 
+const [key, setKey] = useState(null)
 
 export default function List({cards, changeCardsPosition}) {
 
 
      return (
           <>
-                  {cards.map((card) => (
+                  {cards.map((card, index) => (
 
               <li key={card.name} className="card" onClick={ () => changeCardsPosition(cards) }>
             
