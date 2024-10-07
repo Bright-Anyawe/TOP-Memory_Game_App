@@ -5,24 +5,47 @@ import ScoreBoard from "./ScoreBoard";
 export default function MemoryApp() {
  const [score, setScore] = useState(0)
  const [bestScore, setBestScore] = useState(0)
+ const [renderMessage, setRenderMessage] = useState('')
 
+
+  function incrementScore() {
+        setScore(score + 1)
+
+  }
+  
+  function setScoreToZero() {
+    setScore(0)
+  }
+
+
+  
+  function handleBestScore() {
+    setBestScore(score)
+  }
+
+  
 
   return (
     <main>
       <header>
-       <div> 
+       <div className="gameTitleContainer"> 
         <h1>Avengers Memory Game</h1>
-        <h3>
+    <em>
+          <h3>
           Improve your score by clicking on an image <span>Note</span>!
-          Don&apos;t click on an image more than once
-        </h3></div>
+          Don&apos;t click on the same image twice
+        </h3>
+        <span className="renderUserMessage">{renderMessage}</span>
+    </em>
+        </div>
 
        <ScoreBoard score={score} bestScore={bestScore} />
+{/* {renderScoreBoard, scoreNum: score, bestScoreNum: bestScore} */}
       </header>
 
 
       <section className="cardsContainer">
-      <Card setScore={setScore} score={score} bestScore={bestScore} setBestScore={setBestScore} />
+      <Card incrementScore={incrementScore} setScoreToZero={setScoreToZero} handleBestScore={handleBestScore} setRenderMessage={setRenderMessage} />
       </section>
     </main>
   );

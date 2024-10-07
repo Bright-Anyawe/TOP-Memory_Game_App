@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 
-function Card({score, setScore, bestScore, setBestScore}) {
+function Card({incrementScore, setScoreToZero, handleBestScore, setRenderMessage}) {
   const [cards, setCards] = useState([
-    { url: "", name: "Spiderman" },
-    { url: "", name: "Captain marvel" },
-    { url: "", name: "Black Panther" },
-    { url: "", name: "Doctor Strange" },
-    { url: "", name: "Iron Man" },
-    { url: "", name: "Thor" },
-    { url: "", name: "Thanos" },
-    { url: "", name: "Xmen" },
+    { url: "", name: "Spiderman",  clickCard: '' },
+    { url: "", name: "Captain marvel",  clickCard: '' },
+    { url: "", name: "Black Panther",  clickCard: '' },
+    { url: "", name: "Doctor Strange",  clickCard: ''},
+    { url: "", name: "Iron Man",  clickCard: '' },
+    { url: "", name: "Thor",  clickCard: '' },
+    { url: "", name: "Thanos",   clickCard: '' },
+    { url: "", name: "Xmen",  clickCard: '' },
+    { url: "", name: "Beast",  clickCard: '' },
+    { url: "", name: "Jean Grey",  clickCard: '' },
+    { url: "", name: "Carol Danvers",  clickCard: '' },
+    { url: "", name: "Adam Warlock",  clickCard: '' },
+
   ]);
 
   useEffect(() => {
@@ -43,9 +48,26 @@ function Card({score, setScore, bestScore, setBestScore}) {
         { mode: "cors" }
       );
       const request8 = fetch(
+        "https://api.giphy.com/v1/stickers/translate?api_key=xUGeBWKikoUF1sOZRB6a37IK2KhrYt3e&s=Xmen",
+        { mode: "cors" }
+      );
+      const request9 = fetch(
+        "https://api.giphy.com/v1/stickers/translate?api_key=xUGeBWKikoUF1sOZRB6a37IK2KhrYt3e&s=Beast",
+        { mode: "cors" }
+      );
+      const request10 = fetch(
+        "https://api.giphy.com/v1/stickers/translate?api_key=xUGeBWKikoUF1sOZRB6a37IK2KhrYt3e&s=Jean Grey",
+        { mode: "cors" }
+      );
+      const request11 = fetch(
         "https://api.giphy.com/v1/stickers/translate?api_key=xUGeBWKikoUF1sOZRB6a37IK2KhrYt3e&s=Carol%20Danver",
         { mode: "cors" }
       );
+      const request12 = fetch(
+        "https://api.giphy.com/v1/stickers/translate?api_key=xUGeBWKikoUF1sOZRB6a37IK2KhrYt3e&s=Adam Warlock",
+        { mode: "cors" }
+      );
+      
       try {
         const response = await Promise.all([
           request1,
@@ -56,6 +78,10 @@ function Card({score, setScore, bestScore, setBestScore}) {
           request6,
           request7,
           request8,
+          request9,
+          request10,
+          request11,
+          request12,
         ]);
         console.log(response);
         const responseJson = response.map((data) => data.json());
@@ -81,31 +107,41 @@ function Card({score, setScore, bestScore, setBestScore}) {
     fetchData();
   }, []);
 
-  // function handleClick(card) {
-  //   setCount(count + 1)
-
-  //   console.log(`${count} has been read`)
-  // }
+ 
 
   function changeCardsPosition(e) {
     setCards( (cards) => ([...cards].sort(() => Math.random() - 0.5)))
 
-   
-    
-        if(score >= 10) {
-          setCountToZero()
-          return setBestScore(score)
-        }
-        incrementCount()
+const clickCardname = e.currentTarget.dataset.name
+setCards((prevCards) => 
+prevCards.map((card) => 
+{
+if(card.name === clickCardname) {
+console.log(card.name)
+let newClickedCard = card.clickCard ? card.clickCard + 1 : 1;
+setRenderMessage(null)
+if(newClickedCard === 2) {
+  handleBestScore()
+      setRenderMessage('oops! try again')
 
-  function incrementCount() {
-        setScore(score + 1)
+setScoreToZero(0)
+}
 
-  }
 
-  function setCountToZero() {
-    setScore(0)
-  }
+
+return {...card, clickCard: newClickedCard}
+}
+return card
+}
+
+))
+
+        // if(score >= 10) {
+        //   setScoreToZero()
+        // }
+        incrementScore()
+
+    }
   
 
 
@@ -113,7 +149,7 @@ function Card({score, setScore, bestScore, setBestScore}) {
   return (
       <ul>
      {cards.map((card ) => (
-                   <li data-key={card.name} className="card" onClick={changeCardsPosition }>
+                  <li key={card.name} data-name={card.name} className="card" onClick={changeCardsPosition }>
                     {/* <h1> {key} </h1> */}
             <img src={card.url} alt={card.name} />
             <h2> {card.name} </h2>
