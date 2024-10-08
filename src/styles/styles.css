@@ -17,13 +17,6 @@
     font-weight: 600;
 }
 
-/* @media (min-width: 501px) and (max-width: 650px) {
-    
-
-    header span {
-    font-weight: 600;
-} */
-
 header h1{
     font-size: 2rem;
 }
@@ -68,6 +61,63 @@ body {
     background-color: rgb(158, 179, 172);
 
 }
+
+
+@media (min-width: 501px) and (max-width: 650px) {
+    
+    main header {
+        padding-left: 20px;
+    }
+
+    header span {
+    font-weight: 600;
+}
+
+header h1{
+    font-size: 2.5rem;
+}
+
+header h3 {
+    font-size: 1rem;
+}
+
+div.scoreBoardContainer {
+        display: flex;
+    align-self: end;
+}
+
+
+/* 
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+        padding: 31px 0;
+
+}
+
+ul li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(74, 80, 80);
+    border-radius: 8px;
+}
+
+}
+
+body {
+    margin: 0;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+    /* text-align: center; */
+    background-color: rgb(158, 179, 172);
+
+}
+
 
 header {
     display: flex;
